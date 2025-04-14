@@ -45,3 +45,5 @@ Some ideas are takes from the excellent https://github.com/harmtemolder/koreader
 Originally I forked the plugin to implement the functionality in there, but I later decided to first to it in a standalone script.
 
 I still hope we can bring this functionality to the plugin, but I don't have the time to do that right now.
+
+This script also uses https://github.com/SirAnthony/slpp to parse the KOReader sidecar Lua files.
