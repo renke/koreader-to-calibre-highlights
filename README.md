@@ -17,6 +17,8 @@ For post-processing (say, creating flashcards for Anki), however, it's way easie
 
 Make sure Calibre is installed and the `calibre-debug` command is available in your `$PATH`. You e-reader must be connected to your computer and mounted as directory.
 
+**NOTE**: Using this script will delete any highlights you have in your Calibre library. It will import the highlights from your KOReader device and overwrite any existing highlights.
+
 ```
 usage: calibre-debug -e "main.py" --- [-h] koreader_calibre_metadata_path calibre_library_path
 
