@@ -4,6 +4,15 @@ Import your KOReader highlights into Calibre
 
 **WORK IN PROGRESS. THIS MAY DAMAGE YOUR CALIBRE DATABASE. USE AT YOUR OWN RISK. MAKE A BACKUP OF YOUR CALIBRE LIBRARY FIRST.**
 
+Adding highlights in KOReader is good while you actually read a book.
+For post-processing (say, creating flashcards for Anki), however, it's way easier to do that on your computer in Calibre (which you will probably use for managing your books, anyway).
+
+**Highlight in KOReader** (e.g. on your e-reader)
+![KOReader](./docs/koreader-highlight.png)
+
+**Highlight in Calibre** (on your computer)
+![Calibre](./docs/calibre-highlight.png)
+
 ## Usage
 
 Make sure Calibre is installed and the `calibre-debug` command is available in your `$PATH`. You e-reader must be connected to your computer and mounted as directory.
