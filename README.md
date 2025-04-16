@@ -19,6 +19,8 @@ Make sure Calibre is installed and the `calibre-debug` command is available in y
 
 **NOTE**: Using this script will delete any highlights you have in your Calibre library. It will import the highlights from your KOReader device and overwrite any existing highlights.
 
+Clone this repository and run the script.
+
 ```
 usage: calibre-debug -e "main.py" --- [-h] koreader_calibre_metadata_path calibre_library_path
 
