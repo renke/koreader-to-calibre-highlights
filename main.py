@@ -8,6 +8,7 @@ from pathlib import Path
 
 import calibre.library
 from calibre.ebooks.oeb.polish.container import get_container
+import calibre.ebooks.oeb.polish.toc
 
 from slpp import slpp as lua
 
@@ -56,8 +57,14 @@ def main(koreader_calibre_metadata_path, calibre_library_path):
 
         calibre_book_container = get_container(calibre_book_path, tweak_mode=True)
 
+        calibre_toc = calibre.ebooks.oeb.polish.toc.get_toc(
+            calibre_book_container,
+        )
+
         calibre_highlights = [
-            koreader_highlight_to_calibre(koreader_highlight, calibre_book_container)
+            koreader_highlight_to_calibre(
+                koreader_highlight, calibre_book_container, calibre_toc.as_dict
+            )
             for koreader_highlight in koreader_highlights
             if koreader_highlight is not None
         ]
@@ -148,7 +155,9 @@ def main(koreader_calibre_metadata_path, calibre_library_path):
         # )
 
 
-def koreader_highlight_to_calibre(koreader_highlight, calibre_book_container):
+def koreader_highlight_to_calibre(
+    koreader_highlight, calibre_book_container, calibre_toc
+):
     pos0 = koreader_highlight.get("pos0")
     pos1 = koreader_highlight.get("pos1")
 
@@ -170,6 +179,31 @@ def koreader_highlight_to_calibre(koreader_highlight, calibre_book_container):
     if start_spine_index != end_spine_index:
         return None
 
+    def build_calibre_toc_family(data, title):
+        if data["title"] == title:
+            return [data["title"]]
+
+        if "children" in data:
+            for child in data["children"]:
+                result = build_calibre_toc_family(child, title)
+
+                if result:
+                    return [data["title"]] + result
+
+        return None
+
+    calibre_toc_family = build_calibre_toc_family(
+        calibre_toc, koreader_highlight["chapter"]
+    )
+
+    if calibre_toc_family is None:
+        calibre_toc_family = [koreader_highlight["chapter"]]
+
+    calibre_toc_family = [h for h in calibre_toc_family if h is not None]
+
+    if calibre_toc_family is None:
+        calibre_toc_family = [koreader_highlight["chapter"]]
+
     calibre_highlight = {
         "type": "highlight",
         "start_cfi": calibre_start_cfi,
@@ -184,8 +218,7 @@ def koreader_highlight_to_calibre(koreader_highlight, calibre_book_container):
         "style": koreader_style_to_calibre_style(
             koreader_highlight["drawer"], koreader_highlight["color"]
         ),
-        # TODO: Handle subchapters (but first test what calibre does with them)
-        "toc_family_titles": [koreader_highlight["chapter"]],
+        "toc_family_titles": calibre_toc_family,
     }
 
     return calibre_highlight

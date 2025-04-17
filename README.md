@@ -43,14 +43,6 @@ Technically we transform the XPath based KOReaders to the Calibre CFI format it 
 
 It only works for EPUB files, not for PDF or other formats. The script will only import highlights from EPUB files. If you have other formats in your library, they will be ignored.
 
-# What doesn't work yet
-
-Not all highlights are support right now. Some XPath expressions are not supported yet.
-
-The so called `toc_family_titles` attribute is also not correctly handled yet.
-It will only use the chapter as found in the KOReader sidecar file.
-Calibre seem to have no problem with that, though.
-
 # Acknowledgements
 
 Some ideas are takes from the excellent https://github.com/harmtemolder/koreader-calibre-plugin.
